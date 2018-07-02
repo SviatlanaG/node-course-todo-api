@@ -35,7 +35,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',{useNewUrlParser: true},
   //   if(error) {
   //     return console.log('Unable to insert a user.', error);
   //   }
-  //     // console.log(JSON.stringify(result.ops, undefined, 2));
+      // console.log(JSON.stringify(result.ops, undefined, 2));
   //     console.log(result.ops[0]._id.getTimestamp());
   //
   // });
