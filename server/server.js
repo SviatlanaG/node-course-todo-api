@@ -59,7 +59,7 @@ app.delete('/todos/:id', (req, res) =>{
    if(!todo){
      return res.status(404).send();
    }
-   res.status(200).send({todo});
+   res.send({todo});
    // his line:
    // res.send(todo);
  })
@@ -67,8 +67,6 @@ app.delete('/todos/:id', (req, res) =>{
    res.status(400).send();
  });
 });
-
-
 
 app.listen(port, () => {
   console.log(`Started up at port ${port}.`);
