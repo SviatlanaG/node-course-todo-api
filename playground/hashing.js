@@ -5,10 +5,13 @@ var data = {
   id: 14
 };
 
-var token = jwt.sign(data, '123adh');
+var token = jwt.sign(data, 'ads123');
 console.log(token);
-var decoded = jwt.verify(token, '123adh');
+var decoded = jwt.verify(token, 'ads123');
 console.log('decoded' , decoded);
+
+
+
 // var message = 'I am user nubmer 1';
 // var hash = SHA256(message).toString();
 //
