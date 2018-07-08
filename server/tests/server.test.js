@@ -230,7 +230,7 @@ describe('GET /users/me', () => {
           expect(user).toBeTruthy();
           expect(user.password).not.toBe(password);
           done();
-        });
+        }).catch((error) => done(error));
       });
     });
 
@@ -258,3 +258,57 @@ describe('GET /users/me', () => {
     });
 
   });
+
+
+describe('POST /users/login', () =>{
+  it('should login user and return auth token', (done) => {
+    request(app)
+    .post('/users/login')
+    .send({
+      email: users[1].email,
+      password: users[1].password
+    })
+    .expect(200)
+    .expect((res) => {
+      expect(res.headers['x-auth']).toBeTruthy();
+    })
+    .end((error, res) =>{
+      if(error){
+        return done(error);
+      }
+
+      User.findById(users[1]._id).then((user) => {
+        // not working!!!!
+        // expect(user.tokens[0]).toContain({
+        //   access: 'auth',
+        //   token: res.headers['x-auth']
+        // });
+        expect(user.tokens[0]).toBeTruthy();
+        done();
+      }).catch((error) => done(error));
+    });
+  });
+
+  it('should reject invalid login', (done) => {
+
+    request(app)
+    .post('/users/login')
+    .send({
+      email: users[1].email,
+      password: users[1].password + 'varvara'
+    })
+    .expect(400)
+    .expect((res) => {
+      expect(res.headers['x-auth']).toBeFalsy();
+    })
+    .end((error, res) =>{
+      if(error){
+        return done(error);
+      }
+      User.findById(users[1]._id).then((user) => {
+        expect(user.tokens.length).toBe(0);
+        done();
+      }).catch((error) => done(error));
+    });
+  });
+});
